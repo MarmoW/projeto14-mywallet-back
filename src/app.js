@@ -43,7 +43,7 @@ server.post("/", async (req,res) => {
 
         await db.collection("sections").insertOne({ idUsuario: verifyUser._id, authToken })
         
-        return res.status(200).send(authToken)
+        return res.status(200).send({authtoken: authToken, user: verifyUser.user})
 
     }catch(err){
         res.status(500).send(err.mensage)
@@ -129,14 +129,14 @@ server.post("/nova-saida", async (req, res) => {
     const drawSchema = joi.object({
         value: joi.number().required(),
         description: joi.string().required()
-    })
-    
+    })    
     const findToken = await db.collection("sections").findOne({authToken: authtoken})
     if(!findToken) return res.status(400).send("Faça login novamente")
 
     const {error} = drawSchema.validate({value, description})
     if(error) return res.status(400).send(error.message)
 
+    
     try{
         await db.collection("wallet").insertOne({idUsuario: findToken.idUsuario, name: description, value: value, data: dayjs().format("DD/MM"), op: "draw"})
         res.status(200).send("Cadastrado com sucesso")
