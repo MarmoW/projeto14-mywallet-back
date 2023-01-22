@@ -1,18 +1,32 @@
 import express from "express"
 import cors from "cors"
+import AuthRouter from "./routers/AuthRouter.js"
+import EntryRouter from "./routers/EntryRouter.js"
+
+const server = express()
+
+server.use(express.json())
+
+server.use(cors())
+
+server.use([AuthRouter, EntryRouter])
+
+
+server.listen(5000, () => {
+    console.log('Server on')
+  })
+/*
+import express from "express"
+import cors from "cors"
 import { MongoClient } from "mongodb"
 import dotenv from "dotenv"
 import dayjs from "dayjs"
 import joi from "joi"
 import bcrypt from 'bcrypt'
 import { v4 as uuidV4 } from 'uuid'
+import db from "./config/database.js"
 
 dotenv.config()
-
-const mongoClient = new MongoClient(process.env.DATABASE_URL)
-let db
-await mongoClient.connect()
-db = mongoClient.db()
 
 const server = express()
 server.use(express.json())
@@ -87,8 +101,6 @@ server.get("/home", async (req,res) => {
 
     if(!findToken) return res.status(400).send("Por favor retorne a página de login")
 
-    console.log(findToken.idUsuario)
-
     
     try{
         const registerWallet = await db.collection("wallet").find({idUsuario: findToken.idUsuario}).toArray()
@@ -145,6 +157,4 @@ server.post("/nova-saida", async (req, res) => {
     }
 })
 
-server.listen(5000, () => {
-    console.log('Server on')
-  })
+*/
