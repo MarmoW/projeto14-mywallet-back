@@ -1,6 +1,6 @@
 import express from "express"
 import cors from "cors"
-import AuthRouter from "./routers/AuthRouter.js"
+import authRouter from "./routers/AuthRouter.js"
 import EntryRouter from "./routers/EntryRouter.js"
 
 const server = express()
@@ -9,7 +9,7 @@ server.use(express.json())
 
 server.use(cors())
 
-server.use([AuthRouter, EntryRouter])
+server.use([authRouter, EntryRouter])
 
 
 server.listen(5000, () => {

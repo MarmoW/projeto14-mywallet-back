@@ -1,6 +1,6 @@
-import joi from 'joi'
+import Joi from 'joi'
 
-export const entrySchema = joi.object({
-    value: joi.number().required(),
-    description: joi.string().required()
+export const entrySchema = Joi.object({
+    value: Joi.number().required(),
+    description: Joi.string().required()
 })

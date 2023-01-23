@@ -10,9 +10,9 @@ export async function SignIn(req,res) {
     try{
         const verifyUser = await db.collection("users").findOne({email: email})
 
-        const passwordCheck = bcrypt.compareSync(password, verifyUser.password)
-
         if(!verifyUser) return res.status(400).send("Usuário ou senha incorretos")
+        
+        const passwordCheck = bcrypt.compareSync(password, verifyUser.password)
 
         if(!passwordCheck) return res.status(400).send("Usuário ou senha incorretos")
 
